@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Grafik kehadiran</title>
+</head>
+<body>
+    <script>
+        let hari = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+
+        document.write("<h2>Grafik Jumlah Kehadiran Mahasiswa</h2>");
+
+        for (let i = 0; i < hari.length; i++) {
+            let jumlah = parseInt(prompt("Masukkan jumlah mahasiswa hari " + hari[i] + ":"));
+            let batangGrafik = "X".repeat(jumlah);
+            document.write(hari[i] + ": " + batangGrafik + "<br />");
+        }
+    </script>
+</body>
+</html>

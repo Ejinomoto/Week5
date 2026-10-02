@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Bilangan prima</title>
+</head>
+<body>
+    <script>
+        function isPrima(num) {
+            if (num < 2) return false;
+            for (let i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i === 0) return false;
+            }
+            return true;
+        }
+
+        let batas = parseInt(prompt("Masukkan angka batas:"));
+        let prima = [];
+
+        for (let i = 1; i <= batas; i++) {
+            if (isPrima(i)) {
+                prima.push(i);
+            }
+        }
+
+        document.write("<b>Bilangan prima dari 1 sampai " + batas + ":</b><br />");
+        document.write(prima.join(", "));
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Salam based on time</title>
+</head>
+<body>
+    <script>
+        let jam = parseInt(prompt("Jam Sekarang"));
+
+        if (jam >= 6 && jam <= 10) {
+            alert("Selamat Pagi");
+        } else if (jam >= 11 && jam <= 14) {
+            alert("Selamat Siang");
+        } else if (jam >= 15 && jam <= 17) {
+            alert("Selamat Sore");
+        } else if (jam >= 18 && jam <= 22) {
+            alert("Selamat Malam");
+        } else if ((jam >= 23 && jam <= 24) || (jam >= 0 && jam <= 5)) {
+            alert("Selamat Tidur");
+        } else {
+            alert("Format jam tidak valid");
+        }
+    </script>
+</body>
+</html>

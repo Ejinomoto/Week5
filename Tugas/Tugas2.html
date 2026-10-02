@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Nilai Akhir</title>
+</head>
+<body>
+    <script>
+        function cekNilai(nilai) {
+            if (nilai >= 85) return "A";
+            else if (nilai >= 80) return "A-";
+            else if (nilai >= 75) return "B+";
+            else if (nilai >= 70) return "B";
+            else if (nilai >= 65) return "B-";
+            else if (nilai >= 60) return "C+";
+            else if (nilai >= 55) return "C";
+            else if (nilai >= 45) return "D";
+            else return "F";
+        }
+
+        function hitungNilaiAkhir(tugas, uts, uas) {
+            return (tugas * 0.40) + (uts * 0.25) + (uas * 0.35);
+        }
+
+        let jumlahMhs = parseInt(prompt("Jumlah Mahasiswa:"));
+
+        for (let i = 1; i <= jumlahMhs; i++) {
+            let nama = prompt("Nama:");
+            let tugas = parseFloat(prompt("Tugas:"));
+            let uts = parseFloat(prompt("UTS:"));
+            let uas = parseFloat(prompt("UAS:"));
+
+            let nilaiAkhir = hitungNilaiAkhir(tugas, uts, uas);
+            let grade = cekNilai(nilaiAkhir);
+
+            document.write("<br /><br />" + i + ". " + nama + "<br />");
+            document.write("Tugas: " + tugas + "<br />");
+            document.write("UTS: " + uts + "<br />");
+            document.write("UAS: " + uas + "<br />");
+            document.write("Nilai Akhir: " + (Math.round(nilaiAkhir * 100) / 100) + "<br />");
+            document.write("Grade: " + grade + "<br />");
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="id">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#10100d">
+	<title>Night City // Web Prog Hub</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			color-scheme: dark;
+			--ink: #10100d;
+			--panel: #191a16;
+			--panel-raised: #20211c;
+			--line: #383a30;
+			--muted: #a09f91;
+			--paper: #f2f0df;
+			--yellow: #fcee0a;
+			--cyan: #00e5ff;
+			--red: #ff3b55;
+			--mono: "Share Tech Mono", Consolas, monospace;
+			--display: "Barlow Condensed", Impact, sans-serif;
+		}
+
+		* { box-sizing: border-box; }
+
+		body {
+			min-width: 320px;
+			min-height: 100vh;
+			margin: 0;
+			color: var(--paper);
+			background-color: var(--ink);
+			background-image: linear-gradient(90deg, transparent 49.95%, #fcee0a08 50%, transparent 50.05%), repeating-linear-gradient(0deg, transparent 0 47px, #ffffff08 48px);
+			font-family: var(--mono);
+		}
+
+		button, input { font: inherit; }
+		button:focus-visible, input:focus-visible, a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+		.shell { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+
+		.topbar {
+			min-height: 62px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			border-bottom: 1px solid var(--line);
+			font-size: 11px;
+			letter-spacing: 1px;
+			text-transform: uppercase;
+		}
+
+		.brand { display: flex; align-items: center; gap: 10px; color: var(--yellow); }
+		.brand-mark { width: 18px; height: 18px; display: grid; place-items: center; background: var(--yellow); color: var(--ink); font: 800 13px var(--display); transform: skew(-10deg); }
+		.status { display: flex; align-items: center; gap: 8px; color: var(--muted); }
+		.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 10px var(--cyan); }
+
+		.intro { position: relative; padding: 55px 0 34px; border-bottom: 1px solid var(--line); }
+		.intro::after { content: ""; position: absolute; top: 44px; right: 0; width: 170px; height: 90px; border: 1px solid #fcee0a42; background: repeating-linear-gradient(135deg, transparent 0 8px, #fcee0a12 9px 10px); clip-path: polygon(18% 0, 100% 0, 100% 78%, 82% 100%, 0 100%, 0 22%); }
+		.eyebrow { margin: 0 0 10px; color: var(--cyan); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+		h1 { max-width: 720px; margin: 0; font: 800 clamp(48px, 8vw, 88px)/.88 var(--display); letter-spacing: 0; text-transform: uppercase; }
+		h1 span { color: var(--yellow); }
+		.intro-meta { display: flex; align-items: center; gap: 18px; margin-top: 22px; color: var(--muted); font-size: 11px; text-transform: uppercase; }
+		.intro-meta strong { color: var(--paper); font-weight: 400; }
+		.slash { color: var(--red); }
+
+		.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 22px 0 16px; }
+		.filters { display: flex; flex-wrap: wrap; gap: 7px; }
+		.filter {
+			min-height: 34px;
+			padding: 0 13px;
+			border: 1px solid var(--line);
+			background: transparent;
+			color: var(--muted);
+			cursor: pointer;
+			font: 11px var(--mono);
+			text-transform: uppercase;
+			transition: background .16s ease, border-color .16s ease, color .16s ease;
+		}
+		.filter:hover { border-color: var(--paper); color: var(--paper); }
+		.filter[aria-pressed="true"] { border-color: var(--yellow); background: var(--yellow); color: var(--ink); }
+		.search { position: relative; width: min(290px, 100%); }
+		.search::before { content: ">_"; position: absolute; left: 12px; top: 10px; color: var(--cyan); font-size: 12px; }
+		.search input { width: 100%; height: 36px; padding: 0 12px 0 45px; border: 1px solid var(--line); border-radius: 0; background: var(--panel); color: var(--paper); font: 12px var(--mono); }
+		.search input::placeholder { color: #77776e; }
+
+		.section-heading { display: flex; justify-content: space-between; align-items: baseline; margin: 18px 0 12px; }
+		.section-heading h2 { margin: 0; font: 700 25px/1 var(--display); letter-spacing: 0; text-transform: uppercase; }
+		.section-heading p { margin: 0; color: var(--muted); font-size: 10px; text-transform: uppercase; }
+		.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+
+		.tile {
+			position: relative;
+			min-height: 135px;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			overflow: hidden;
+			padding: 17px 18px 15px;
+			border: 1px solid var(--line);
+			background: linear-gradient(115deg, #20211c 0%, #171814 70%);
+			color: var(--paper);
+			text-decoration: none;
+			transition: border-color .18s ease, transform .18s ease, background .18s ease;
+			animation: enter .35s both;
+		}
+		.tile::after { content: ""; position: absolute; right: -17px; top: -18px; width: 60px; height: 60px; border: 1px solid #f2f0df16; transform: rotate(45deg); }
+		.tile:hover { z-index: 1; border-color: var(--yellow); background: #25261c; transform: translateY(-2px); }
+		.tile[data-kind="modul"]:hover { border-color: var(--cyan); }
+		.tile-top, .tile-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+		.tag { color: var(--cyan); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+		.tile[data-kind="tugas"] .tag { color: var(--yellow); }
+		.index { color: #77776e; font-size: 11px; }
+		.tile h3 { margin: 12px 0; font: 700 27px/1 var(--display); letter-spacing: 0; text-transform: uppercase; }
+		.filename { color: var(--muted); font-size: 10px; }
+		.arrow { color: var(--red); font-size: 18px; transition: transform .18s ease; }
+		.tile:hover .arrow { transform: translate(3px, -2px); }
+		.empty { display: none; padding: 30px 0; color: var(--muted); font-size: 12px; }
+
+		footer { display: flex; justify-content: space-between; gap: 18px; margin-top: 38px; padding: 15px 0 22px; border-top: 1px solid var(--line); color: #77776e; font-size: 10px; text-transform: uppercase; }
+		footer span:last-child { color: var(--red); }
+
+		@keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+		@media (max-width: 700px) {
+			.shell { width: min(100% - 32px, 540px); }
+			.intro { padding-top: 42px; }
+			.intro::after { width: 90px; height: 50px; top: 30px; opacity: .7; }
+			h1 { max-width: 430px; font-size: clamp(48px, 14vw, 72px); }
+			.toolbar { align-items: stretch; flex-direction: column; }
+			.search { width: 100%; }
+			.grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+			.tile { min-height: 125px; padding: 14px; }
+			.tile h3 { font-size: 24px; }
+		}
+		@media (max-width: 420px) {
+			.shell { width: calc(100% - 24px); }
+			.topbar { min-height: 54px; font-size: 9px; }
+			.intro-meta { gap: 9px; font-size: 9px; }
+			.grid { grid-template-columns: 1fr; }
+			.tile { min-height: 112px; }
+			footer { font-size: 9px; }
+		}
+		@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+	</style>
+</head>
+<body>
+	<header class="topbar shell">
+		<div class="brand"><span class="brand-mark">W</span><span>Web Prog // Night City</span></div>
+		<div class="status"><span class="status-dot" aria-hidden="true"></span><span>System online</span></div>
+	</header>
+
+	<main class="shell">
+
+		<section aria-label="Daftar latihan dan tugas">
+			<div class="grid" id="resource-grid">
+				<a class="tile" data-kind="modul" data-search="modul latihan 1 latihan1" href="Modul/latihan1.html">
+					<div class="tile-top"><span class="tag">Modul // Latihan</span><span class="index">01</span></div>
+					<h3>Latihan 01</h3>
+					<div class="tile-bottom"><span class="filename">latihan1.html</span><span class="arrow" aria-hidden="true">↗</span></div>
+				</a>
+				<a class="tile" data-kind="modul" data-search="modul latihan 2 latihan2" href="Modul/latihan2.html">
+					<div class="tile-top"><span class="tag">Modul // Latihan</span><span class="index">02</span></div>
+					<h3>Latihan 02</h3>
+					<div class="tile-bottom"><span class="filename">latihan2.html</span><span class="arrow" aria-hidden="true">↗</span></div>
+				</a>
+				<a class="tile" data-kind="tugas" data-search="tugas 1 tugas1" href="Tugas/Tugas1.html">
+					<div class="tile-top"><span class="tag">Tugas // Brief</span><span class="index">03</span></div>
+					<h3>Tugas 01</h3>
+					<div class="tile-bottom"><span class="filename">Tugas1.html</span><span class="arrow" aria-hidden="true">↗</span></div>
+				</a>
+				<a class="tile" data-kind="tugas" data-search="tugas 2 tugas2" href="Tugas/Tugas2.html">
+					<div class="tile-top"><span class="tag">Tugas // Brief</span><span class="index">04</span></div>
+					<h3>Tugas 02</h3>
+					<div class="tile-bottom"><span class="filename">Tugas2.html</span><span class="arrow" aria-hidden="true">↗</span></div>
+				</a>
+				<a class="tile" data-kind="tugas" data-search="tugas 3 tugas3" href="Tugas/Tugas3.html">
+					<div class="tile-top"><span class="tag">Tugas // Brief</span><span class="index">05</span></div>
+					<h3>Tugas 03</h3>
+					<div class="tile-bottom"><span class="filename">Tugas3.html</span><span class="arrow" aria-hidden="true">↗</span></div>
+				</a>
+				<a class="tile" data-kind="tugas" data-search="tugas 4 tugas4" href="Tugas/Tugas4.html">
+					<div class="tile-top"><span class="tag">Tugas // Brief</span><span class="index">06</span></div>
+					<h3>Tugas 04</h3>
+					<div class="tile-bottom"><span class="filename">Tugas4.html</span><span class="arrow" aria-hidden="true">↗</span></div>
+				</a>
+				<a class="tile" data-kind="tugas" data-search="tugas 5 tugas5" href="Tugas/Tugas5.html">
+					<div class="tile-top"><span class="tag">Tugas // Brief</span><span class="index">07</span></div>
+					<h3>Tugas 05</h3>
+					<div class="tile-bottom"><span class="filename">Tugas5.html</span><span class="arrow" aria-hidden="true">↗</span></div>
+				</a>
+				<a class="tile" data-kind="tugas" data-search="tugas 6 tugas6" href="Tugas/Tugas6.html">
+					<div class="tile-top"><span class="tag">Tugas // Brief</span><span class="index">08</span></div>
+					<h3>Tugas 06</h3>
+					<div class="tile-bottom"><span class="filename">Tugas6.html</span><span class="arrow" aria-hidden="true">↗</span></div>
+				</a>
+				<a class="tile" data-kind="tugas" data-search="tugas 7 tugas7" href="Tugas/Tugas7.html">
+					<div class="tile-top"><span class="tag">Tugas // Brief</span><span class="index">09</span></div>
+					<h3>Tugas 07</h3>
+					<div class="tile-bottom"><span class="filename">Tugas7.html</span><span class="arrow" aria-hidden="true">↗</span></div>
+				</a>
+			</div>
+			<p class="empty" id="empty-state">Tidak ada file yang cocok dengan pencarian ini.</p>
+		</section>
+	</main>
+
+	<footer class="shell"><span>Night City local network // Week 05</span><span>Choose your next move</span></footer>
+
+	<script>
+		const filterButtons = document.querySelectorAll(".filter");
+		const tiles = [...document.querySelectorAll(".tile")];
+		const searchInput = document.querySelector("#search");
+		const resultCount = document.querySelector("#result-count");
+		const emptyState = document.querySelector("#empty-state");
+		let activeFilter = "all";
+
+		function updateResults() {
+			const query = searchInput.value.trim().toLowerCase();
+			let visibleCount = 0;
+
+			for (const tile of tiles) {
+				const matchesFilter = activeFilter === "all" || tile.dataset.kind === activeFilter;
+				const matchesSearch = tile.dataset.search.includes(query);
+				const visible = matchesFilter && matchesSearch;
+				tile.hidden = !visible;
+				if (visible) visibleCount += 1;
+			}
+
+			resultCount.textContent = `${String(visibleCount).padStart(2, "0")} results`;
+			emptyState.style.display = visibleCount ? "none" : "block";
+		}
+
+		for (const button of filterButtons) {
+			button.addEventListener("click", () => {
+				activeFilter = button.dataset.filter;
+				for (const filterButton of filterButtons) {
+					filterButton.setAttribute("aria-pressed", String(filterButton === button));
+				}
+				updateResults();
+			});
+		}
+
+		searchInput.addEventListener("input", updateResults);
+	</script>
+</body>
+</html>

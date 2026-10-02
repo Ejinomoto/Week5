@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>bilangan ganjil</title>
+</head>
+<body>
+    <script>
+        let batas = parseInt(prompt("Masukkan angka batas:"));
+        let ganjil = [];
+
+        for (let i = 1; i <= batas; i++) {
+            if (i % 2 !== 0) {
+                ganjil.push(i);
+            }
+        }
+
+        document.write("<b>Bilangan ganjil dari 1 sampai " + batas + ":</b><br />");
+        document.write(ganjil.join(", "));
+    </script>
+</body>
+</html>

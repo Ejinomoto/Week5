@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>hitung luas & keliling</title>
+</head>
+<body>
+    <script>
+        let pilihan = "";
+
+        while (pilihan !== "luas" && pilihan !== "keliling") {
+            pilihan = prompt("Apakah ingin menghitung 'luas' atau 'keliling'?").toLowerCase();
+        }
+
+        let panjang = parseFloat(prompt("Masukkan Panjang:"));
+        let lebar = parseFloat(prompt("Masukkan Lebar:"));
+
+        if (pilihan === "luas") {
+            let luas = panjang * lebar;
+            alert("Luas = " + luas);
+        } else if (pilihan === "keliling") {
+            let keliling = 2 * (panjang + lebar);
+            alert("Keliling = " + keliling);
+        }
+    </script>
+</body>
+</html>
